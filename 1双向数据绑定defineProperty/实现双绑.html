@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text" id="ipt1">
+<div id="ipt2"></div>
+
+</body>
+<script>
+    let obj = {};
+    let temp = {name: 'lily'}; //中间对象
+    let ipt1 = document.getElementById('ipt1');
+    let ipt2 = document.getElementById('ipt2');
+
+    Object.defineProperty(obj, 'name', {
+        get() {
+            // return 'lily';
+            console.log(temp['name']);
+            return temp['name']  //浏览器一加载就执行，后期name属性发生变化时都会重新获取
+        },
+        set(val) {
+            // obj.name=val;  //会一直调用自身  引起栈溢出
+            alert(val)
+            console.log(temp['name']);
+            temp['name'] = val;
+            console.log(temp['name']);
+            ipt1.value = val;
+            ipt2.innerText = val;
+        }
+    });
+    ipt1.value = obj.name;  //页面一加载，调用get
+    ipt2.innerText = obj.name;
+    ipt1.addEventListener("input", function () {
+        obj.name = this.value;  //当属性值变化，调用set(val)  把this.value传给val
+        console.log(obj.name);
+    }, false);
+
+</script>
+</html>

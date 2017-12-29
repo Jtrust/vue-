@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <div v-text="msg"></div>
+    <input type="button" value="函数" @click="fn"><br> <!--fn后面的()可以不写，则会把事件类型自动传给fn，若写了（），则要手动传$event-->
+    <input type="button" value="函数" @click="fn($event,666)"><br>
+    <input type="button" value="箭头函数" @click="aaa">
+    <hr>
+    <input type="text" @keydown="fnKey">{{key}}
+    <input type="text" @keydown.enter="f2">
+    <input type="text" @keydown.ctrl.enter="f2">
+</div>
+</body>
+</html>
+<script src="../lib/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',   //Vue挂载的DOM元素
+        data: {
+            msg:111,
+            key:''
+        },
+        methods:{
+            fn(e,val){   //方法名不能跟data里的变量名一致
+                console.log(this)
+                console.log(e)
+                this.msg=val?val:this.msg
+            },
+            
+            aaa:()=>{   //this  指向window
+                console.log(this)
+            },
+            fnKey(e){
+                // this.key=e.keyCode
+                this.key=e.key
+            },
+            f2(){
+                alert(1)
+            }
+
+
+            
+        }
+
+
+    })
+
+
+</script>

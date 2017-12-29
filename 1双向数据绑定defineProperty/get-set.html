@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    let obj = {};
+    Object.defineProperty(obj, 'name', {  //为对象定义属性
+
+        // value:'Bob',   有get  set  就不能写value
+        //取obj的name属性会触发  get方法
+        get() {      //浏览器一加载就执行，后期name属性发生变化时都会重新获取。依赖的属性发生变化，就从新get（所以用set给自身赋值，又会触发get）
+            return 'Bob'
+        },
+        //给obj赋值会触发  set方法
+        set(val) {  //设置属性时调用set，val就是设置的属性值
+            console.log(val)
+        }
+    })
+    obj.name = 'Lucy'
+
+</script>
+</body>
+</html>

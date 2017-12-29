@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <input type="text" @keydown.enter="fn" v-model="ipt">
+    <ul>
+        <li v-for="(i,k) in list">{{i}} <input type="button" value="删除" @click="del(k)"></li>
+    </ul>
+    <hr>
+    <input type="text" @keydown.enter="fn" v-model="ipt">
+    <ul>
+        <li v-for="item in list">{{item}} <input type="button" value="删除" @click="remove(item)"></li>
+    </ul>
+</div>
+
+</body>
+<script src="../lib/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            list: [666],
+            ipt: ''
+        },
+        methods: {
+            fn() {
+                this.list.push(this.ipt);
+                this.ipt = ''
+            },
+            del(k) {
+                console.log(k)
+                this.list.splice(k, 1)
+            },
+            remove(item){
+                this.list=this.list.filter(listItem =>listItem!=item)
+            }
+
+
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <ul>
+        <li v-for="(item,ind) in products" >
+            {{ind}}{{item.name}}
+            <ul>
+                <li v-for="c in item.color">{{c}}</li>
+            </ul>
+        </li>
+    </ul>
+    <hr>
+    <ul>
+        <li v-for="item in 'abc'">{{item}}</li>
+    </ul>
+    <ul>
+        <li v-for="(i,k) in 5">{{i}}---{{k}}</li>
+    </ul>
+</div>
+</body>
+</html>
+<script src="../lib/vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',   //Vue挂载的DOM元素
+        data: {
+            products: [{name: "苹果", color: ["green", "red"]},
+                {name: "橘子", color: ["orange", "yellow"]},
+                {
+                    name: "香蕉", color: ["black", "blue", "yellow"]
+                }]
+        }
+
+
+    })
+    console.log('log ' + vm.products)
+    console.log('log ' + vm.$data)
+
+
+</script>
