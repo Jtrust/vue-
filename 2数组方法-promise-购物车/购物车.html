@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+    <link rel="stylesheet" href="../lib/bootstrap.css">
+    <script src="../lib/axios.js"></script>
+
+</head>
+<body>
+
+<div id="app">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <caption class="text-center text-warning">购物车</caption>
+                    <tr>
+                        <th><input type="checkbox" v-model="ckAll">全选</th>
+                        <th>商品</th>
+                        <th>单价</th>
+                        <th>数量</th>
+                        <th>小计</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr v-for="(product,ind) in products">
+                        <td><input type="checkbox" v-model="product.isSelected"></td>
+                        <td>
+                            <img :src="product.productCover">
+                            {{product.productName}}
+                        </td>
+                        <td>{{product.productPrice}}元</td>
+                        <td><input type="number" v-model.number="product.productnum" min="1"></td>
+                        <td>{{product.productPrice*product.productnum | toFixed(2)}}</td>
+                        <td>
+                            <button class="btn btn-danger btn-xs" @click="remove(ind)">删除
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">总价:{{sum | toFixed(2)}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        created() {  //vue初始化完成后，请求数据.钩子函数里的this指向vm实例
+            axios.get('./carts.json').then(res => {
+                this.products = res.data
+                // console.log(this.products)
+            }, err => {
+                console.log(err)
+            })
+        },
+        computed: {    //computed里的属性不能与data里的重名
+            sum() {  // 这样写相当于获取属性值  get()。一定要return出去
+                // console.log(this.products)
+                return this.products.reduce((prev, next) => {
+                    // console.log(next.isSelected)
+                    if (next.isSelected) {
+                        // console.log(next.productPrice,next.productnum)
+                        return prev + next.productPrice * next.productnum
+                    } else {
+                        return prev
+                    }
+
+                }, 0)
+            },
+            ckAll: {
+                get() {  //获取
+                    if (this.products === []) {   // every() 不会对空数组进行检测
+                        return false
+                    }
+                    return this.products.every(item => {
+                        console.log(item.isSelected)
+                        return item.isSelected
+                    })
+
+                },
+                set(val) {  // 调用set方法来设置ckAll属性值。val指向ckAll自身的值。
+                    // console.log(val)
+                    this.products.forEach(item => {
+                        item.isSelected = val
+                    })
+                }
+            },
+
+        },
+        data: {
+            products: []
+
+        },
+        methods: {
+            remove(ind) {
+                this.products.splice(ind, 1)
+            },
+        },
+        filters: {
+            toFixed(params1, params2) {  //params1表示 | 前面的数据，第二个参数是自己传过来的参数
+                return '¥ ' + params1.toFixed(params2)
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,21 @@
+[
+  {
+    "isSelected":true,
+    "productCover":"cover1.jpg",
+    "productName":"深入浅出Node.js",
+    "productPrice":20.335,
+    "productnum":3
+  },{
+    "isSelected":false,
+    "productCover":"cover1.jpg",
+    "productName":"深入浅出Node.js",
+    "productPrice":10,
+    "productnum":3
+  },{
+    "isSelected":true,
+    "productCover":"cover1.jpg",
+    "productName":"深入浅出Node.js",
+    "productPrice":30,
+    "productnum":3
+  }
+]

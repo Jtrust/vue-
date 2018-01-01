@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    多选---绑定的数据需要是数组类型，需要设置value值
+    <hr>
+    <input type="checkbox" v-model="ck" value="吃饭" id="lunch">吃饭
+    <input type="checkbox" v-model="ck" value="睡觉">睡觉
+    <input type="checkbox" v-model="ck" value="打豆豆">打豆豆 <br>{{ck}}
+    <div>
+        单选按钮 <br>
+        <input type="radio" v-model="gender" value="nan">男 <br>
+        <input type="radio" v-model="gender" value="nv">女 <br>{{gender}}
+    </div>
+    <hr>
+    如果没有value属性，则把option里面的内容赋给绑定的值
+    <select name=""  v-model="s">
+        <option value="" disabled>请选择</option>
+        <option value="1">北京1</option>
+        <option value="2">北京2</option>
+        <option value="3">北京3</option>
+        <option >北京4</option>
+    </select>
+    {{s}}
+    <hr>
+    select选择多个option
+    <select name=""  v-model="sArr" multiple>
+        <option value="" disabled>请选择</option>
+        <option value="1">北京1</option>
+        <option value="2">北京2</option>
+        <option value="3">北京3</option>
+        <option >北京4</option>
+    </select>
+    {{sArr}}
+</div>
+
+</body>
+<script>
+    let vm = new Vue({
+            el: '#app',
+            data: {
+               ck:[],  //数组类型
+                gender:'',
+                // s:''
+                s:'2' , //设置默认选项
+                sArr:[]
+            }
+        })
+</script>
+</html>

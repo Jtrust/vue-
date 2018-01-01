@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    //使用场景
+    //多个接口请求数据
+    //promise 承诺 过一段时间后把你要的返回给你，都是异步的操作
+    //Promise 对象代表一个异步操作，有三种状态：
+    // Pending（进行中）、Resolved（已完成，又称 Fulfilled）和 Rejected（已失败）。只有异步操作的结果，可以决定当前是哪一种状态，任何其他操作都无法改变这个状态。
+
+
+
+
+    let promise = new Promise((resolve,reject)=>{
+        setTimeout(function(){
+            if(Math.random()>0.5){
+                resolve("成功了") //成功状态后会执行then里第一个参数
+            }else{
+                reject("失败了")//失败状态后执行then里第二个参数
+            }
+        },1000)
+    })
+    //promise调用then时每次会返回新的promise对象，然后就可以使用链式写法继续调用then
+    promise.then((data)=>{
+        console.log(data);
+        return data;  //return数据出去 给后一个then使用
+    },(rej)=>{
+        console.log(rej)
+    }).then((data)=>{
+        console.log(data);
+    },(rej)=>{
+
+    })
+</script>
+</body>
+</html>
