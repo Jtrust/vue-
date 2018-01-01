@@ -55,8 +55,8 @@
             axios.get('./carts.json').then(res => {
                 this.products = res.data
                 // console.log(this.products)
-            }, err => {
-                console.log(err)
+            }).catch(err=>{
+                console.log(err);
             })
         },
         computed: {    //computed里的属性不能与data里的重名
