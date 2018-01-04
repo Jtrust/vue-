@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+    <link rel="stylesheet" href="../lib/bootstrap.css">
+</head>
+<body>
+1.面板组成：
+2.传不同类名 现实不同颜色
+3.要有多个面板，根据数据确定，数据动态获取
+<div id="app">
+    <panel colortype="primary"  @child-say="parentSay" >
+        <div slot="title">标题</div>
+        <div slot="content">
+            内容
+        </div>
+        <div >这是footer。作者是 </div>
+    </panel>
+
+</div>
+<template id="panel">
+    <div class="panel " :class="[color]">
+        <div class="panel-heading" ref="head">
+            <slot name="title"></slot>
+        </div>
+        <div class="panel-body">
+            <slot name="content"></slot>
+        </div>
+        <div class="panel-footer">
+            <slot></slot>
+            <button @click="say">点我弹出标题</button>
+        </div>
+    </div>
+</template>
+</body>
+</html>
+<script>
+    //子组件先渲染  父组件后渲染
+    let panel = {
+        template: "#panel",
+        props: {
+            colortype: {
+                type: String,
+                default: 'primary'
+            }
+
+        },
+        computed: {
+            color() {
+                return 'panel-' + this.colortype
+            }
+        },
+        methods: {
+            say() {
+                this.$emit('child-say',this.$refs.head.innerText)
+            }
+        },
+        data() {
+            return {
+                // color:''
+            }
+
+        }
+    }
+    let vm = new Vue({
+        data: {
+            articles:[
+                {colortype:"warning", title:"vue标题", content:"内容1111111111", author:'Lucy'},
+                {colortype:"success", title:"react标题", content:"内容222222", author:''},
+                {colortype:"danger", title:"angular标题", content:"内容3333333", author:'Bob'},
+            ]
+        },
+        methods: {
+            parentSay(v) {
+                alert(v)
+            }
+        },
+        components: {
+            panel
+        }
+
+
+    }).$mount('#app');
+
+
+</script>

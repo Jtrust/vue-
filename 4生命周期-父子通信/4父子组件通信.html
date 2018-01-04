@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <input type="text " v-model="msg">
+    <hello :propa="aaa" :m="msg"></hello>  <!--动态绑定属性propa,值aaa是父亲的-->
+</div>
+
+</body>
+</html>
+<script>
+    //组件之间相互独立，子组件不能直接获取父组件数据
+    //父组件向子组件传递数据通过props属性传递
+    //
+    let hello = {
+        template: "<div>{{propa}}---{{mmm}}</div>",  //模板里展示属性propa
+
+        props: ['propa', 'm'],   //子组件声明属性 propa  m，分别对应父亲的值
+        computed: {
+            mmm: function () {
+                return this.m.trim().toLowerCase()
+            }
+        },
+        // props: {  //props数据验证
+        //     propa: {},  //{}代表不校验
+        //
+        //     mmm: {
+        //         type: [Number, String],
+        //         required: true
+        //     },
+        //
+        //     // 数值且有默认值
+        //     propD: {
+        //         type: Number,
+        //         default: 100  //不传就取默认值
+        //     },
+        //     // 数组/对象的默认值应当由一个工厂函数返回
+        //     propE: {
+        //         type: Object,
+        //         default: function () {
+        //             return {message: 'hello'}
+        //         }
+        //     },
+        //     // 自定义验证函数
+        //     propF: {
+        //         validator: function (value) {
+        //             return value > 10
+        //         }
+        //     }
+        // }
+    }
+
+
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            aaa: '给子组件',
+            msg: '父组件'
+        },
+        components: {
+            hello
+        }
+
+    })
+
+
+</script>

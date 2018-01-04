@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+    <style>
+        .a {
+            font-size: 28px
+        }
+
+        .c {
+            color: red;
+        }
+
+        .d {
+            text-decoration: line-through
+        }
+        .active{
+            color: blue;
+        }
+        .text-danger{
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    Class 与 Style 动态绑定（优先级高于原有的）：1.对象形式 2.数组形式
+    <div class="a" :class="{c:color,d:!color}" @click="color=!color">
+        click me
+    </div>
+    <div class="" :class="[aaa,{c:flag,d:!flag}]" @click="flag=!flag">
+        click me
+    </div>
+    <hr>
+    <div :class="classObject" @click="error=1">绑定数据对象</div>
+</div>
+</body>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            color: true,
+            aaa: 'a',
+            flag: 1,
+            isActive: true,
+            error: null
+        },
+        computed: {
+            classObject: function () {
+                return {
+                    active: this.isActive && !this.error,
+                    'text-danger': this.error && this.error.type === 'fatal'
+                }
+            }
+        }
+
+    })
+
+</script>
+</html>

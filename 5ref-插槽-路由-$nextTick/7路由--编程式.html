@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*.router-link-active{*/
+            /*color: red;*/
+        /*}*/
+        .rl-active{
+            color: red;
+        }
+    </style>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-router.js"></script>
+</head>
+<body>
+<div id="app">
+    <!-- to=""  放字符串-->
+    <!--<router-link to="/home">首页</router-link>-->
+    <!--<router-link to="/list" tag="button">列表页面</router-link>-->
+
+    <!--:to="{path:'/home'}"  适合传动态的-->
+    <router-link :to="{path:'/home'}">首页</router-link>
+    <router-link :to="{path:'/list'}" tag="button">列表页面</router-link>
+    <hr>
+
+    <router-view></router-view>
+</div>
+<script>
+    // 1.创建路由组件
+    let home = {
+        template: '<div>home <button @click="goList">去列表页</button></div>',
+        methods:{
+            goList(){
+                // this.$router.push('/list')  //强制跳转路径
+                this.$router.replace('/list')  //强制替换路径
+            }
+        }
+    };
+    let list = {
+        template: '<div>list <button @click="back">返回</button></div>',
+        methods:{
+            back(){
+                this.$router.go(-1)  //返回某一级
+            }
+        }
+    }
+    // 2.设置映射表 路由和组件的对应关系
+    let routes = [
+        {path: '/home', component: home},
+        {path: '/list', component: list},
+    ];
+    let router = new VueRouter({
+        linkActiveClass:'rl-active', //手动配置类名
+        routes // （缩写）相当于 routes: routes
+    })
+
+    let vm = new Vue({
+        router,//每个组件都会拥有一个叫$router的属性（存的方法），还有一个叫$route的属性（没有r的存的都是属性）
+        el: "#app",
+        data: {},
+        components: {},
+        methods: {}
+    })
+</script>
+</body>
+</html>

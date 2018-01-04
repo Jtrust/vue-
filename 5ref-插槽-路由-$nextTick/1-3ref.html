@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <button @click="fn">toggle</button>
+    <modal ref="dialog"></modal>  <!--给子组件定义一个标识-->
+    <!--ref 被用来给元素或子组件注册引用信息。引用信息将会注册在父组件的 $refs 对象上。如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素；如果用在子组件上，引用就指向组件实例-->
+</div>
+<script>
+    let modal = {
+        template:"<div v-show='s'>显示模态框.....</div>",
+        data(){
+            return {
+                s:true
+            }
+        },
+        methods:{
+            hide(){
+                this.s = !this.s
+            }
+        }
+    }
+    //父组件里直接操作子组件的属性和方法，让子组件显示和隐藏
+    let vm  = new Vue({
+        el:"#app",
+        data:{
+            flag:false
+        },
+        components:{
+            modal
+        },
+        methods:{
+            fn(){
+                //获取到要操作的子组件，然后再对子组件的控制
+                //this.$refs.dialog 获取的是子组件modal
+                //console.log(this.$refs.dialog)
+                this.$refs.dialog.hide();
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*.router-link-active{*/
+            /*color: red;*/
+        /*}*/
+        .rl-active{
+            color: red;
+        }
+    </style>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-router.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--1 设置路由的连接导航-->
+    <!--一定要写 / ，不然如果有下一级路由会出错-->
+    <router-link to="/home">首页</router-link>    <!--最终默认渲染为a标签-->
+    <router-link to="/list" tag="button">列表页面</router-link>  <!--加tag指定渲染后的标签-->
+    <hr>
+    <!--2 路由出口-->
+    <router-view></router-view>   <!-- <router-view> 是个全局组件，可直接使用-->
+</div>
+<script>
+    // 1.创建路由组件
+    let home = {
+        template: '<div>home<button>去列表页</button></div>'
+    };
+    let list = {
+        template: '<div>list<button>去home页</button></div>'
+    }
+    // 2.设置路由表 路由和组件的对应关系
+    let routes = [
+        {path: '', component: home},   //默认显示首页
+        {path: '/home', component: home},
+        {path: '/list', component: list},
+        // {path: '/*', component: home},   //以上都匹配不到时，默认显示首页，这样只切换组件，路径没变，不建议使用
+        {path: '/*', redirect: '/home'}, //以上都匹配不到时，或404时，重定向
+
+    ];
+    // 3.实例化vue-router框架里的VueRouter类， 创建 router 实例，然后传 `routes` 配置
+    // 默认是hash模式（开发时使用，不会导致404.hash方式不支持seo，#后面的值搜索引勤搜不到）
+    // 当你使用 history 模式时 还需要后台配置支持（不带#，上线后使用）
+    let router = new VueRouter({
+        // mode: 'history',  //h5模式
+        // linkActiveClass:'router-link-active',  //路由的连接导航激活时，默认添加类名router-link-active
+        linkActiveClass:'rl-active', //手动配置类名
+        routes // （缩写）相当于 routes: routes
+    })
+
+    let vm = new Vue({
+        router,
+        el: "#app",
+        data: {},
+        components: {},
+        methods: {}
+    })
+</script>
+</body>
+</html>

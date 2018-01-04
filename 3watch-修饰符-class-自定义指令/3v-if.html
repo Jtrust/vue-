@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+    <link rel="stylesheet" href="../lib/bootstrap.css">
+    <script src="../lib/axios.js"></script>
+
+</head>
+<body>
+
+<div id="app">
+    <div v-if="num<5"><5</div>
+    <div v-else-if="num==5">=5</div>
+    <div v-else>>5</div>
+    <hr>
+    <template v-if="num<5">
+        <div><5</div>
+        <div>template起包裹多个标签的作用</div>
+    </template>
+    <div v-else-if="num==5">=5</div>
+    <div v-else>>5</div>
+    <hr>
+    <button @click="flag=!flag">R U ok?</button>
+    <div v-show="flag">ok</div>
+    <div v-show="!flag">不ok</div>
+</div>
+
+</body>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            num: 4,
+            msg: '',
+            flag:1
+        }
+    })
+
+</script>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <div>
+        <parent>
+
+        </parent>
+    </div>
+
+</div>
+</body>
+</html>
+<script>
+    let son = {
+        template:'<div>{{son1}}</div>',
+        data(){
+            return {
+                son1:'son111'
+            }
+        }
+    }
+    let parent = {
+        template: '<div>{{msg}}<son></son></div>',
+        data() {
+            return {
+                msg: 'parent'
+            }
+        },
+        components: {
+            son
+        }
+
+    }
+    let vm = new Vue({
+        // el: '#app',   //Vue挂载的DOM元素
+        data: {
+            // msg: 'hello vue'
+        },
+        components: {
+            parent
+
+        }
+
+
+    }).$mount('#app');
+
+
+</script>

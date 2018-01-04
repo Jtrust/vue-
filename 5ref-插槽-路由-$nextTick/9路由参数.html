@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+    </style>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-router.js"></script>
+</head>
+<body>
+<div id="app">
+
+    <router-link to="/artical/1/aaa">商品1</router-link>
+    <router-link to="/artical/2/b">商品2</router-link>
+    <router-link to="/artical/4/c">商品4</router-link>
+    <hr>
+
+    <router-view></router-view>   <!-- <router-view> 是个全局组件，可直接使用-->
+</div>
+
+<script>
+    // $routec存放属性，$router存放方法
+    let artical = {template: '<div>第{{this.$route.params.a}}篇文章</div>'};
+
+
+    let routes = [  //路径参数 :a 表示 值必须要有，但是随机的(a是自定义的参数)
+        {path: '/artical/:a/:b', component: artical},
+        // 如果/artical/1/ccc
+        // 那么/artical/:a/:b   ->{a:1,b:'ccc'}  this.$route.params就取到了{a:1,b:'ccc'}
+    ];
+
+    let router = new VueRouter({
+
+        linkActiveClass: 'rl-active', //手动配置类名
+        routes // （缩写）相当于 routes: routes
+    })
+
+    let vm = new Vue({
+        router,
+        el: "#app",
+        data: {},
+        components: {},
+        methods: {}
+    })
+</script>
+</body>
+</html>

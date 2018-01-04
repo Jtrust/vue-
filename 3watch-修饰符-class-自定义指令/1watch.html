@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+    <link rel="stylesheet" href="../lib/bootstrap.css">
+    <script src="../lib/axios.js"></script>
+
+</head>
+<body>
+
+<div id="app">
+    <input type="text" v-model="a">{{msg}}
+</div>
+
+</body>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            a: '',
+            msg: ''
+        },
+        //写法一
+        // watch: {    //虽然计算属性在大多数情况下更合适，但有时也需要一个自定义的侦听器。这就是为什么 Vue 通过 watch 选项提供了一个更通用的方法，来响应数据的变化。当需要在数据变化时执行异步或开销较大的操作时，这个方式是最有用的。
+        //     a: function (newVal, oldVal) {  //监听a属性的变化   a要在data里声明
+        //         // if (this.a.length < 5) {
+        //         //     return this.msg = '长度小于5'
+        //         // }
+        //         // return this.msg = '成功'
+        //
+        //         console.log(newVal, oldVal)
+        //         this.a.length < 5 ? this.msg = '长度小于5' : this.msg = '成功'
+        //
+        //     }
+        //
+        // },
+
+    })
+    //写法二
+    vm.$watch('a', (newVal, oldVal) => {
+        console.log(newVal, oldVal)
+        vm.a.length < 5 ? vm.msg = '长度小于5' : vm.msg = '成功'
+    })
+</script>
+</html>

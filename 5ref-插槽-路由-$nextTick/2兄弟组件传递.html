@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+
+    <hello1></hello1>
+    <hello2></hello2>
+</div>
+
+</body>
+</html>
+<script>
+    let Event = new Vue();
+    let vm = new Vue({
+        data: {
+            msg: 'hello vue'
+        },
+        components: {
+            //组件名：对象
+            hello1: {
+                template: "<div>{{msg}} <button @click='send'>发送1的数据</button></div>",
+                data() {   //组件里的data必须写成函数，return一个对象
+                    return {
+                        msg: 'hello1组件'
+                    }
+                },
+                methods: {
+                    send(){
+                        Event.$emit('AAA','1中的数据','hahaha')
+                    }
+                }
+            },
+            hello2: {
+                template: "<div>{{msg}} 拿到的数据：{{got}}</div>",
+                data() {   //组件里的data必须写成函数，return 一个对象
+                    return {
+                        msg: 'msg-hello2组件',
+                        got: ''
+                    }
+                },
+                created() {
+                    Event.$on('AAA',(x,y)=>{
+                        this.got = x;
+                        console.log(x, y);
+                    })
+                }
+
+            }
+        }
+
+
+    }).$mount('#app');
+
+
+</script>

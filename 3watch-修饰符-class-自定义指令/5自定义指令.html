@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+    <link rel="stylesheet" href="../lib/bootstrap.css">
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left: 0;
+            top: 0px;
+        }
+
+        .div2 {
+            width: 150px;
+            height: 150px;
+
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <div v-drag v-color  class="div2"></div>
+
+    <div v-drag v-color="a"  ></div>
+</div>
+
+</body>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            a: 'green',
+            msg: ''
+        },
+        directives: {
+            color(el, binding) {  //参数一 当前操作的DOM元素；参数二 是传进来的参数
+                console.log(binding);
+                el.style.background = binding.value || 'red'    //传进来的参数值通过binding.value拿到
+            },
+            drag(el, binding) {
+                el.onmousedown = function (e) {
+                    e.preventDefault();//阻止图片的默认行为（粘附鼠标）
+                    var x = el.offsetLeft;
+                    var y = el.offsetTop;
+                    var mx = e.clientX;
+                    var my = e.clientY;
+                    //在谷歌浏览器，为了防止鼠标丢失，所以绑定在document上
+                    //移动时设置下盒子当前的位置
+                    document.onmousemove = function (e) {
+                        el.style.left = x + (e.clientX - mx) + "px";
+                        el.style.top = y + (e.clientY - my) + "px";
+                    };
+                    //松开鼠标时解除绑定的方法
+                    document.onmouseup = function () {
+                        document.onmousemove = document.onmouseup = null
+                    }
+                }
+            }
+
+
+        }
+
+    })
+
+</script>
+</html>

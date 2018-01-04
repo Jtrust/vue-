@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+    <link rel="stylesheet" href="../lib/bootstrap.css">
+    <style>
+        .bd {
+            border: 1px solid #ccc
+        }
+
+        div {
+            width: 70%;
+        }
+
+    </style>
+</head>
+<body>
+- .stop 阻止冒泡或者捕获
+- .prevent 阻止默认行为
+- .capture 执行事件捕获（正常情况是冒泡）
+- .self 事件源是自己才执行
+- .once 只绑定一次
+<div id="app">
+    <div class="bd" @click="fn1">outer
+        <div class="bd" @click.stop="fn2">center
+            <div class="bd" @click="fn3">inner
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            a: '',
+            msg: ''
+        },
+        methods: {
+            fn1() {
+                alert('outer')
+            },
+            fn2() {
+                alert('center')
+            },
+            fn3() {
+                alert('inner')
+            }
+        }
+
+
+    })
+
+</script>
+</html>

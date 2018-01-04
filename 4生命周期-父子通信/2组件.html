@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <hello-world>33</hello-world>
+    <aaa></aaa>
+    <hello></hello>
+    <hello2></hello2>
+    <hello3></hello3>
+</div>
+<template id="hello2">
+    <div>   <!--包裹起来-->
+        <p>hello2组件</p>
+        <div>{{msg}}</div>
+    </div>
+
+</template>
+</body>
+</html>
+<script>
+    // 组件名字定义规范：1.不要大写字母，不能用中文 2.多个字母之间用-连接，在js里写成驼峰式的也可以
+    // 创建组件（三种位置的写法） ->  注册组件 -> 使用组件
+
+    //全局注册组件，写在vue实例化之前,一般用在写插件的时候
+    Vue.component('hello-world', {
+        template: '<div>{{rrr}}</div>',
+        methods:{
+
+        },
+        data(){
+            return {
+                rrr:'hello-world'
+            }
+        }
+    });
+    Vue.component('aaa', {
+        template: '<div>aaa</div>',
+    });
+    var hello3 = {
+        template: '<div>hello3</div>'
+    }
+    let vm = new Vue({
+        // el: '#app',   //Vue挂载的DOM元素
+        data: {
+            msg: 'hello vue'
+        },
+        components: {
+            //组件名：对象
+            hello: {
+                template: "<div>{{msg}}</div>",
+                data() {   //组件里的data必须写成函数，return一个对象
+                    return {
+                        msg: 'hello组件'
+                    }
+                }
+
+            },
+            hello2: {
+                template: "#hello2",  //id名    在html定义模板
+                data() {   //组件里的data必须写成函数，return 一个对象
+                    return {
+                        msg: 'msg-hello2组件'
+                    }
+                }
+
+            },
+            hello3: hello3   //在js里定义组件对象
+        }
+
+
+    }).$mount('#app');
+
+
+</script>

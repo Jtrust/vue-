@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    {{msg}}
+    <hr>
+    <div ref="div1">111</div>
+    <div ref="div1">222</div>
+</div>
+</body>
+</html>
+<script>
+    let vm = new Vue({
+        // el: '#app',   //Vue挂载的DOM元素
+        data: {
+            msg: 'hello vue'
+        },
+        beforeCreate() {   //没啥用
+            // console.log(this)
+            // debugger
+        },
+        created() {  //初始化完成  注入和响应数据，此时data才有数据 . 请求数据一般写在此函数里
+
+        },
+        beforeMount() {//检查是否有el选项？是否有template选项？如果有template 则用对应模板替换html标签
+        },
+        mounted() {  //把编译好的数据渲染成DOM  替换el。若要操作DOM，则在mounted钩子函数里(this.$ref.xxx)
+            console.log(this.$refs.div1);
+        },
+        beforeUpdate() {//数据更新之前
+        },
+        updated() {//数据更新之后
+        },
+        beforeDestroy() {  //销毁之前
+            // console.log(this);
+        }
+    }).$mount('#app');
+    vm.msg = 222;
+    // vm.$destroy();//手动执行vm.$destroy()之后 销毁之后 移除观察者、子组件、事件监听函数
+    // vm.msg=33;//无效
+    console.log(vm.$props);
+</script>

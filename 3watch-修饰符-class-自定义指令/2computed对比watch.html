@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../lib/vue.js"></script>
+    <link rel="stylesheet" href="../lib/bootstrap.css">
+    <script src="../lib/axios.js"></script>
+
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="a">{{msg}}
+</div>
+
+</body>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            a: ''
+        },
+        computed: {    //computed里的属性不能与data里的重名
+            msg: {
+                get() {
+                    console.log(this.a.length);
+                    if (this.a.length < 5) {
+                        return '长度小于5'
+                    }
+                    return '成功'
+                }
+            }
+
+        },
+        watch:{
+        }
+    })
+</script>
+</html>

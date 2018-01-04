@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+    </style>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-router.js"></script>
+</head>
+<body>
+<div id="app">
+
+    <router-link to="/home">首页</router-link>
+    <router-link to="/detail">detail</router-link>
+    <hr>
+
+    <router-view></router-view>   <!-- <router-view> 是个全局组件，可直接使用-->
+</div>
+<template id="detail">
+    <div>
+        <router-link to="/detail/profile">个人中心</router-link>
+        <router-link to="/detail/about">关于</router-link>
+        <router-view></router-view>
+    </div>
+</template>
+<script>
+
+    let home = {template: '<div>home</div>'};
+    let detail = {template: '#detail'}
+    let profile = {template: '<div>profile</div>'}
+    let about = {template: '<div>about</div>'}
+
+    let routes = [
+        {path: '', component: home},   //默认显示首页
+        {path: '/home', component: home},
+        {
+            path: '/detail',
+            component: detail,
+            children: [//children里的路径永远不带/，如果带/表示1级路由
+                {path:'profile',component:profile},
+                {path:'about',component:about},
+            ]
+        },
+        {path: '/*', redirect: '/home'}, //以上都匹配不到时，或404时，重定向
+
+    ];
+
+    let router = new VueRouter({
+
+        linkActiveClass: 'rl-active', //手动配置类名
+        routes // （缩写）相当于 routes: routes
+    })
+
+    let vm = new Vue({
+        router,
+        el: "#app",
+        data: {},
+        components: {},
+        methods: {}
+    })
+</script>
+</body>
+</html>
